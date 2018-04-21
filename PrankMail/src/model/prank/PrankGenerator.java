@@ -46,7 +46,7 @@ public class PrankGenerator {
             pranks.add(prank);
 
         }
-        
+
         return pranks;
     }
 

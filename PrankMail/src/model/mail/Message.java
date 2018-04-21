@@ -38,4 +38,28 @@ public class Message {
     public void setBody(String body) {
         this.body = body;
     }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public String[] getTo() {
+        return to;
+    }
+
+    public String[] getCc() {
+        return cc;
+    }
+
+    public String[] getBcc() {
+        return bcc;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public String getBody() {
+        return body;
+    }
 }
