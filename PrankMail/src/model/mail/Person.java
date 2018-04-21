@@ -1,20 +1,26 @@
 package model.mail;
 
+import org.omg.CORBA.PERSIST_STORE;
+
 public class Person {
 
     private String lastName;
     private String firstName;
-    private String adress;
+    private String address;
 
-    public Person(String lastName, String firstName, String adress) {
+    public Person(String lastName, String firstName, String address) {
         this.lastName = lastName;
         this.firstName = firstName;
-        this.adress = adress;
+        this.address = address;
     }
 
-    public String getLastName() {
-        return lastName;
+    public Person(String address){
+        this.lastName = "Toto";
+        this.firstName = "Tata";
+        this.address = address;
     }
+
+    public String getLastName() { return lastName; }
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
@@ -28,11 +34,11 @@ public class Person {
         this.firstName = firstName;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

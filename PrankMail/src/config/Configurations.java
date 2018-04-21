@@ -1,6 +1,7 @@
 package config;
 
 import model.mail.Message;
+import model.mail.Person;
 
 import java.io.*;
 import java.util.List;
@@ -12,9 +13,9 @@ public class Configurations {
 	private String smtpServerAdress;
 	private int smtpServerPort;
 	private int nbOfgroups;
-	private String prankToCc;
-	private List<Message> listOfPrankMessage;
-	private List<String> listOfVictims;
+	private Person prankToCc;
+	private List<String> listOfPrankMessage;
+	private List<Person> listOfVictims;
 
 	public Configurations(String configfilename, String victimsFilename, String messageFilename) {
 		Properties properties = new Properties();
@@ -26,14 +27,14 @@ public class Configurations {
 			smtpServerAdress = properties.getProperty("smtpServerAdress");
 			smtpServerPort = Integer.parseInt(properties.getProperty("smtpServerPort"));
 			nbOfgroups = Integer.parseInt(properties.getProperty("nbOfgroups"));
-			prankToCc = properties.getProperty("prankToCc");
+			prankToCc = new Person(properties.getProperty("prankToCc"));
 
 			BufferedReader reader = new BufferedReader(new FileReader(victimsFilename));
 
 			String email;
 			while ((email = reader.readLine()) != null){
 				if(validate(email)){
-					listOfVictims.add(email);
+					listOfVictims.add(new Person(email));
 				}
 			}
 
@@ -48,7 +49,7 @@ public class Configurations {
 				if(!line.equals("--")){
 					message += line;
 				}else{
-					//listOfPrankMessage.add(message);
+					listOfPrankMessage.add(message);
 					message = "";
 				}
 			}
@@ -76,5 +77,29 @@ public class Configurations {
 		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
 		return matcher.find();
+	}
+
+	public String getSmtpServerAdress() {
+		return smtpServerAdress;
+	}
+
+	public int getSmtpServerPort() {
+		return smtpServerPort;
+	}
+
+	public int getNbOfgroups() {
+		return nbOfgroups;
+	}
+
+	public Person getPrankToCc() {
+		return prankToCc;
+	}
+
+	public List<String> getListOfPrankMessage() {
+		return listOfPrankMessage;
+	}
+
+	public List<Person> getListOfVictims() {
+		return listOfVictims;
 	}
 }
