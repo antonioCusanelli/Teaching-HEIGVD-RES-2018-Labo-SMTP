@@ -1,8 +1,10 @@
 package model.prank;
 
+import model.mail.Message;
 import model.mail.Person;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Prank {
@@ -11,6 +13,7 @@ public class Prank {
     private List<Person> victimRecipient = new ArrayList<>();
     private List<Person> witnessRecipient = new ArrayList<>();
     private String message;
+
 
 
     public Person getVictimSender() {
@@ -43,5 +46,25 @@ public class Prank {
 
     public void addWitnessRecipient(Person p){
         witnessRecipient.add(p);
+    }
+
+    public Message generateMessage(){
+        Message m = new Message();
+        m.setFrom(victimSender.getAddress());
+        String[] recipient = new String[victimRecipient.size()];
+        for(int i = 0; i < victimRecipient.size(); i++){
+            recipient[i] = victimRecipient.get(i).getAddress();
+        }
+        m.setTo(recipient);
+        /*if(witnessRecipient != null){
+            String[] witnessRecipient = new String[witnessRecipient.size()];
+            for(int i = 0; i < victimRecipient.size(); i++){
+                witnessRecipient[i] = victimRecipient.get(i).getAddress();
+            }
+            message.setTo(reciepient);
+        }*/
+
+        m.setBody(message);
+        return m;
     }
 }

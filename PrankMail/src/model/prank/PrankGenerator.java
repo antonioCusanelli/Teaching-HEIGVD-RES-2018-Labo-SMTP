@@ -39,7 +39,6 @@ public class PrankGenerator {
                 prank.addVictimRecipient(p);
             }
             prank.addVictimRecipient(config.getPrankToCc());
-
             prank.setMessage(messages.get(messageIndex));
             messageIndex = (messageIndex + 1) % messages.size();
 

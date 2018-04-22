@@ -84,7 +84,8 @@ public class SmtpClient implements ISmtpClient{
             writer.write(SmtpProtocol.EOL);
             writer.flush();
 
-            //Subject and message
+            writer.write(message.getBody());
+            writer.flush();
 
             writer.write(SmtpProtocol.END_OF_DATA);
             writer.flush();
