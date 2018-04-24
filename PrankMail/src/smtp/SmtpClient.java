@@ -23,9 +23,7 @@ public class SmtpClient implements ISmtpClient{
 
     public void connect() throws IOException {
         try{
-            System.out.println("coucou");
                 socket = new Socket(server, port);
-                System.out.println("yolo");
                 reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
                 writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"));
 

@@ -2,7 +2,7 @@
 
 **The project:**
 
-The purpose of this project is to send forged emails to a certain number of groups. The groups are defined by the user using configuration files. This project is a Maven project in Java. We also provide a simple mock server which can be run in a docker container. This readme explains how to set up the program on Linux.
+The purpose of this project is to send forged emails to a certain number of groups. The groups are defined by the user using configuration files. This project is written Java. We also provide a simple mock server which can be run in a docker container. This readme explains how to set up the program on Linux.
 
 **Mock server with docker:**
 * The docker directory is the directory `docker-MockServer`. It contains the Dockerfile and a source folder required by the Dockerfile. You can build the docker image simply by going in this folder and runing the following command in a bash terminal : `docker build -t yourContainerName .`. You can check if your image was correctly build by typing `docker images`. This command should list all builded image on your system.
