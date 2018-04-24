@@ -2,6 +2,7 @@ package model.prank;
 
 import config.Configurations;
 import model.mail.Group;
+import model.mail.Message;
 import model.mail.Person;
 
 import java.util.ArrayList;
@@ -41,7 +42,6 @@ public class PrankGenerator {
             prank.addVictimRecipient(config.getPrankToCc());
             prank.setMessage(messages.get(messageIndex));
             messageIndex = (messageIndex + 1) % messages.size();
-
             pranks.add(prank);
 
         }

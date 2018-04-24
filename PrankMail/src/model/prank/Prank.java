@@ -56,15 +56,9 @@ public class Prank {
             recipient[i] = victimRecipient.get(i).getAddress();
         }
         m.setTo(recipient);
-        /*if(witnessRecipient != null){
-            String[] witnessRecipient = new String[witnessRecipient.size()];
-            for(int i = 0; i < victimRecipient.size(); i++){
-                witnessRecipient[i] = victimRecipient.get(i).getAddress();
-            }
-            message.setTo(reciepient);
-        }*/
-
-        m.setBody(message);
+        String[] cut = message.split("\r\n");
+        m.setSubject(cut[0]);
+        m.setBody(cut[1]);
         return m;
     }
 }

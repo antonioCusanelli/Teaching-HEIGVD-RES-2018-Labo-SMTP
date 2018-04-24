@@ -23,8 +23,9 @@ public class SmtpClient implements ISmtpClient{
 
     public void connect() throws IOException {
         try{
-            if(!connected) {
+            System.out.println("coucou");
                 socket = new Socket(server, port);
+                System.out.println("yolo");
                 reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
                 writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"));
 
@@ -43,7 +44,6 @@ public class SmtpClient implements ISmtpClient{
 
                 System.out.println(line);
                 connected = true;
-            }
         } catch (IOException e){
             System.out.println(e.getStackTrace());
             connected = false;
@@ -55,6 +55,8 @@ public class SmtpClient implements ISmtpClient{
 
     public void sendMessage(Message message) throws IOException{
         if(connected){
+            //line = reader.readLine();
+            System.out.println(SmtpProtocol.MAIL_FROM + message.getFrom() + SmtpProtocol.EOL);
             writer.write(SmtpProtocol.MAIL_FROM + message.getFrom() + SmtpProtocol.EOL);
             writer.flush();
 
@@ -62,6 +64,7 @@ public class SmtpClient implements ISmtpClient{
             System.out.println(line);
 
             for(String reciever : message.getTo()){
+                System.out.println(SmtpProtocol.RCPT_TO + reciever + SmtpProtocol.EOL);
                 writer.write(SmtpProtocol.RCPT_TO + reciever + SmtpProtocol.EOL);
                 writer.flush();
                 line = reader.readLine();
@@ -84,16 +87,33 @@ public class SmtpClient implements ISmtpClient{
             writer.write(SmtpProtocol.EOL);
             writer.flush();
 
-            writer.write(message.getBody());
+            writer.write(message.getSubject() + SmtpProtocol.EOL + SmtpProtocol.EOL);
+            writer.flush();
+
+
+
+            writer.write(message.getBody() + SmtpProtocol.EOL);
             writer.flush();
 
             writer.write(SmtpProtocol.END_OF_DATA);
             writer.flush();
 
-            writer.write(SmtpProtocol.QUIT + SmtpProtocol.EOL);
-            writer.flush();
+            line = reader.readLine();
+            System.out.println(line);
+
         }
 
+    }
+
+    public void quit() throws IOException{
+        writer.write(SmtpProtocol.QUIT + SmtpProtocol.EOL);
+        writer.flush();
+        line = reader.readLine();
+        System.out.println(line);
+
+        socket.close();
+        writer.close();
+        reader.close();
     }
 
 

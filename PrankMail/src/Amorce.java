@@ -10,7 +10,7 @@ import java.util.List;
 public class Amorce {
 
     public static void main(String[] args) throws IOException{
-        Configurations config = new Configurations("config.properties", "victims.utf8","messages.utf8");
+        Configurations config = new Configurations();
         SmtpClient client = new SmtpClient(config.getSmtpServerAdress(), config.getSmtpServerPort());
 
         try{
@@ -23,6 +23,8 @@ public class Amorce {
                 m = p.generateMessage();
                 client.sendMessage(m);
             }
+
+            client.quit();
 
         }catch (IOException e){
             System.out.println(e.getStackTrace());

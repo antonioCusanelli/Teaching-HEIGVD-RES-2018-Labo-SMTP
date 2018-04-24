@@ -4,6 +4,7 @@ import model.mail.Message;
 import model.mail.Person;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.regex.Matcher;
@@ -14,14 +15,14 @@ public class Configurations {
 	private int smtpServerPort;
 	private int nbOfgroups;
 	private Person prankToCc;
-	private List<String> listOfPrankMessage;
-	private List<Person> listOfVictims;
+	private List<String> listOfPrankMessage = new ArrayList<>();
+	private List<Person> listOfVictims = new ArrayList<>();
 
-	public Configurations(String configfilename, String victimsFilename, String messageFilename) {
+	public Configurations() {
 		Properties properties = new Properties();
 		InputStream file = null;
 		try{
-			file = new FileInputStream(configfilename);
+			file = new FileInputStream("configuration/config.properties");
 			properties.load(file);
 
 			smtpServerAdress = properties.getProperty("smtpServerAdress");
@@ -29,7 +30,7 @@ public class Configurations {
 			nbOfgroups = Integer.parseInt(properties.getProperty("nbOfgroups"));
 			prankToCc = new Person(properties.getProperty("prankToCc"));
 
-			BufferedReader reader = new BufferedReader(new FileReader(victimsFilename));
+			BufferedReader reader = new BufferedReader(new FileReader("configuration/victims.utf8"));
 
 			String email;
 			while ((email = reader.readLine()) != null){
@@ -40,17 +41,26 @@ public class Configurations {
 
 			reader.close();
 
-			reader = new BufferedReader(new FileReader(messageFilename));
+			reader = new BufferedReader(new FileReader("configuration/messages.utf8"));
 
-			String message = "";
+			String body = "";
+			String subject = "";
+			boolean firstLine = true;
 			String line;
 			while ((line = reader.readLine()) != null){
 				//-- is the end of message marker
 				if(!line.equals("--")){
-					message += line;
+					if(firstLine){
+						subject = line;
+						firstLine = false;
+					}else{
+						body += line;
+					}
 				}else{
-					listOfPrankMessage.add(message);
-					message = "";
+					listOfPrankMessage.add(subject + "\r\n" + body);
+					firstLine = true;
+					subject = "";
+					body = "";
 				}
 			}
 
